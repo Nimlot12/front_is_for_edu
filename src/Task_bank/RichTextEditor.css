@@ -1,0 +1,52 @@
+.editor-container {
+    border: 1px solid #ddd;
+    padding: 10px;
+    min-height: 300px;
+    background: #fff;
+  }
+  
+  .wysiwyg-editor {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  .editor-toolbar {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+  
+  .fontFamilySelect {
+    font-family: "Times New Roman", Times, serif;
+  }
+  
+  .fontFamilyGeorgia {
+    font-family: Georgia, serif;
+  }
+  
+  .fontFamilyArial {
+    font-family: Arial, sans-serif;
+  }
+  
+  .fontFamilyVerdana {
+    font-family: Verdana, sans-serif;
+  }
+  
+  .fontFamilyTahoma {
+    font-family: Tahoma, sans-serif;
+  }
+  
+  .rdw-editor-main {
+    background-color: #f9f9f9;
+    padding: 10px;
+    min-height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rdw-editor-main:focus-within {
+    outline: 2px solid #007bff;
+    background-color: #fff;
+  }
