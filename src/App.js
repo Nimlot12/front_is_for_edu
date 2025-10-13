@@ -14,6 +14,9 @@ import Schedule_page from "./Schedule/Schedule_page";
 import Forbidden from "./Errors/Forbidden";
 import Teach_page from "./Teach_panel/Teach_page";
 import Task_bank_page from "./Task_bank/Task_bank_page";
+import Workspace_page from "./Workspace/Workspace_page";
+import LessonHomework_page from "./Workspace/LessonHomework/LessonHomework_page";
+import Lesson_page from "./Workspace/Lesson/Lesson_page";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
@@ -108,7 +111,31 @@ function App() {
                 <Task_bank_page />
               </ProtectedRoute>
             }
-          />                                                  
+          />
+          <Route
+            path="/lead_page/teach_panel/workspaces"
+            element={
+              <ProtectedRoute permission="teacher_permission">
+                <Workspace_page />
+              </ProtectedRoute>
+            }
+          /> 
+          <Route
+            path="/lead_page/teach_panel/workspaces/lesson_homework/:workspaceId"
+            element={
+              <ProtectedRoute permission="teacher_permission">
+                <LessonHomework_page />
+              </ProtectedRoute>
+            }
+          /> 
+          <Route
+            path="/lead_page/teach_panel/workspaces/lesson_homework/:workspaceId/lesson/:lessonId"
+            element={
+              <ProtectedRoute permission="teacher_permission">
+                <Lesson_page />
+              </ProtectedRoute>
+            }
+          />                                                    
         </Routes>
       </Router>
     </UserProvider>
