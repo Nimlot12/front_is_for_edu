@@ -1643,7 +1643,14 @@ body {
     gap: 14px;
 }
 
-.panel {
+.board-placeholder {
+    text-align: center;
+    opacity: 0.9;
+}
+.JamBoard-container {
+    max-width: 3000px;
+    width: 100%;
+    height: 782px;
     background: white;
     border-radius: var(--border-radius);
     padding: 16px;
@@ -1651,7 +1658,8 @@ body {
 }
 
 .board-area {
-    min-height: 320px;
+    max-height: 2000px;
+    height: 97%;
     border: 2px dashed rgba(52,152,219,0.12);
     border-radius: 8px;
     display: flex;
@@ -1659,9 +1667,6 @@ body {
     justify-content: center;
     color: #6c757d;
     padding: 12px;
-}
-
-.board-placeholder {
-    text-align: center;
-    opacity: 0.9;
+    flex-direction: column;
+    gap: 10px;
 }
