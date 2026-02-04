@@ -28,7 +28,7 @@ const AuthForm = () => {
     setErrors(newErrors);
     const response = await fetch(`${API_URL}/auth/login/`, {
           method: "POST",
-          credentials: "include",
+          credentials: "omit",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: loginEmail, password: loginPassword })
         });
@@ -48,7 +48,7 @@ const AuthForm = () => {
     setErrors(newErrors);
     const response = await fetch(`${API_URL}/auth/register`, {
             method: "POST",
-            credentials: "include",
+            credentials: "omit",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: registerEmail, password: registerPassword, phone_number: registerPhoneNumber, first_name: registerName, last_name: registerLastName })
     });

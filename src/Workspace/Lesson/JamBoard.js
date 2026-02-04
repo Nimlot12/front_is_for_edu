@@ -1,31 +1,91 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import BoardCanvas from "../JamBoard/BoardCanvas";
 import BoardToolbar from "../JamBoard/BoardToolbar";
 
-
-const JamBoard = () => {
-  const totalSlides = 3;
-  const [slides, setSlides] = useState(Array.from({ length: totalSlides }, () => []));
-  const [currentSlide, setCurrentSlide] = useState(0);
+const JamBoard = ({ lessonId }) => {
+  const [board, setBoard] = useState(null);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [tool, setTool] = useState("pen");
-  const [followTeacher, setFollowTeacher] = useState(true);
+  const ws = useRef(null);
+  const isWsReady = useRef(false);
+  const pendingOps = useRef([]); // операции до открытия WS
 
-  const updateSlide = (slideIndex, obj) => {
-    setSlides((prev) => {
-      const newSlides = [...prev];
-      newSlides[slideIndex] = [...newSlides[slideIndex], obj];
-      return newSlides;
-    });
+  // Загружаем доску по lessonId
+  useEffect(() => {
+    const fetchBoard = async () => {
+      try {
+        const token = localStorage.getItem("access_token");
+        const res = await fetch(
+          `http://localhost:8000/whiteboards/get_by_lesson/?lesson_id=${lessonId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const data = await res.json();
+        setBoard(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchBoard();
+  }, [lessonId]);
+
+  // Подключаем WS
+  useEffect(() => {
+    if (!board) return;
+
+    const token = localStorage.getItem("access_token");
+    ws.current = new WebSocket(`ws://localhost:8000/whiteboards/ws/board/${board.id}?token=${token}`);
+
+    ws.current.onopen = () => {
+      console.log("WebSocket connected");
+      isWsReady.current = true;
+
+      // Отправляем все накопленные операции
+      pendingOps.current.forEach(op => ws.current.send(JSON.stringify(op)));
+      pendingOps.current = [];
+    };
+
+    ws.current.onmessage = (event) => {
+      const msg = JSON.parse(event.data);
+      setBoard((prevBoard) => {
+        const slides = prevBoard.slides.map((s) => {
+          if (s.id === msg.slide_id) {
+            return {
+              ...s,
+              state: {
+                ...s.state,
+                elements: [...(s.state.elements || []), msg.op_data],
+              },
+            };
+          }
+          return s;
+        });
+        return { ...prevBoard, slides };
+      });
+    };
+
+    ws.current.onclose = () => {
+      isWsReady.current = false;
+    };
+
+    return () => ws.current.close();
+  }, [board]);
+
+  if (!board) return <div>Загрузка доски...</div>;
+
+  const slides = board.slides || [];
+  const currentSlide = slides[currentSlideIndex];
+
+  const nextSlide = () => setCurrentSlideIndex((i) => Math.min(slides.length - 1, i + 1));
+  const prevSlide = () => setCurrentSlideIndex((i) => Math.max(0, i - 1));
+
+  const sendOp = (opData) => {
+    const message = { slide_id: currentSlide.id, op_data: opData };
+    if (ws.current && isWsReady.current) {
+      ws.current.send(JSON.stringify(message));
+    } else {
+      pendingOps.current.push(message); // буферизуем, пока WS не готов
+    }
   };
-
-  const prevSlide = () => setCurrentSlide((s) => Math.max(0, s - 1));
-  const nextSlide = () => setCurrentSlide((s) => Math.min(totalSlides - 1, s + 1));
-  const clearSlide = () =>
-    setSlides((prev) => {
-      const newSlides = [...prev];
-      newSlides[currentSlide] = [];
-      return newSlides;
-    });
 
   return (
     <div className="JamBoard-container">
@@ -36,19 +96,17 @@ const JamBoard = () => {
         setTool={setTool}
         prevSlide={prevSlide}
         nextSlide={nextSlide}
-        clearSlide={clearSlide}
-        currentSlide={currentSlide}
-        totalSlides={totalSlides}
-        followTeacher={followTeacher}
-        setFollowTeacher={setFollowTeacher}
+        currentSlide={currentSlideIndex}
+        totalSlides={slides.length}
       />
 
       <div className="board-area">
         <BoardCanvas
-          slides={slides}
-          currentSlide={currentSlide}
+          width={1200}
+          height={600}
+          slide={currentSlide}
           tool={tool}
-          updateSlide={updateSlide}
+          onDraw={sendOp}
         />
       </div>
     </div>

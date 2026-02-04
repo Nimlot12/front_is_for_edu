@@ -8,20 +8,21 @@ import { useParams } from "react-router-dom";
 import JamBoard from "./JamBoard";
 
 const Lesson_page = () => {
-    const {user, setUser} = useUser();
-    const { lessonId } = useParams();
-    return (
-        <div className="dashboard-container">
-            <NavBar user={user} setUser={setUser}/>
-            <main className="main-content">
-                <Header user={user}/>
-                <div className="lesson-container">
-                    <Lesson_navbar lessonId={lessonId}/>
-                    <JamBoard />
-                </div>
-            </main>
-        </div>
-    );
+  const { user, setUser } = useUser();
+  const { lessonId } = useParams();
 
+  return (
+    <div className="dashboard-container">
+      <NavBar user={user} setUser={setUser} />
+      <main className="main-content">
+        <Header user={user} />
+        <div className="lesson-container">
+          <Lesson_navbar lessonId={lessonId} />
+          <JamBoard lessonId={lessonId} />
+        </div>
+      </main>
+    </div>
+  );
 };
+
 export default Lesson_page;

@@ -13,7 +13,7 @@ const NavBar = ({user, setUser}) => {
     const handleLogout = async () => {
         await fetch(`${API_URL}/auth/logout/`, {
           method: "POST",
-          credentials: "include",
+          credentials: "omit",
         });
         localStorage.removeItem("access_token");
         localStorage.removeItem("user");
