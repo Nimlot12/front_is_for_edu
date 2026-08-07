@@ -1,0 +1,90 @@
+@import './globals.scss';
+
+.auth-form {
+  @include flex-center;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: $border-radius;
+  box-shadow: $shadow-sm;
+  width: 100%;
+  min-width: 400px;
+  padding: $spacing-lg;
+  text-align: center;
+  transition: $transition;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-hover;
+  }
+
+  &__logo-container {
+    margin-bottom: $spacing-lg;
+    @include flex-center;
+    max-width: 100%;
+  }
+
+  &__logo {
+    max-width: 180px;
+    height: auto;
+    border-radius: $border-radius;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    &:hover {
+      transform: scale(1.05) rotate(3deg);
+    }
+  }
+
+  &__switcher {
+    display: flex;
+    background: $sidebar-background;
+    border-radius: $border-radius;
+    margin-bottom: $spacing-lg;
+    overflow: hidden;
+    box-shadow: $shadow-sm;
+    width: 100%;
+
+    button {
+      flex: 1;
+      padding: $spacing-sm;
+      background: transparent;
+      font-weight: 600;
+      color: $text-color;
+      transition: $transition;
+      position: relative;
+      border: none;
+
+      &:hover::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: $primary-color;
+        transform: scaleX(1);
+      }
+
+      &.active {
+        background: $primary-color;
+        color: white;
+      }
+    }
+  }
+
+  &__title {
+    margin: 0 0 0 0;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  &__footer {
+    margin-top: $spacing-lg;
+  }
+  &__login-form{
+    width: 100%;
+  }
+}
+
+.btn--width{
+  width: 100%;
+}

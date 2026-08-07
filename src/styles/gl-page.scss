@@ -1,0 +1,29 @@
+@import './globals';
+
+.lesson-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm 0;
+    border-bottom: 1px solid $sidebar-background;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__subject {
+    font-weight: 500;
+    color: $text-color;
+  }
+
+  &__time {
+    color: rgba($text-color, 0.7);
+    font-size: 14px;
+  }
+}

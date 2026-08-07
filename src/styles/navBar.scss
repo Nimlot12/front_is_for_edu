@@ -1,0 +1,100 @@
+@import './globals.scss';
+
+.nav-bar {
+  width: $sidebar-width;
+  background: $sidebar-background;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: $spacing-lg;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05);
+
+  &__logo-container {
+    margin-bottom: $spacing-lg;
+  }
+
+  &__logo {
+    width: 100%;
+    height: auto;
+    border-radius: $border-radius / 2;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    &:hover {
+      transform: scale(1.05) rotate(3deg);
+    }
+  }
+
+  &__menu {
+    flex-grow: 1;
+    margin-top: $spacing-lg;
+    list-style: none;
+    padding: 0;
+  }
+
+  &__item {
+    margin-bottom: $spacing-sm;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    color: $text-color;
+    text-decoration: none;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius;
+    transition: $transition;
+    font-weight: 500;
+
+    svg {
+      margin-right: $spacing-md;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    span {
+      flex: 1;
+    }
+
+    &:hover {
+      background: rgba($primary-color, 0.1);
+      color: $primary-color;
+    }
+
+    &--active {
+      background: $primary-color;
+      color: white;
+
+      svg {
+        stroke: white;
+      }
+    }
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding-top: $spacing-lg;
+    border-top: 1px solid rgba($text-color, 0.1);
+  }
+
+  &__logout {
+    @extend .link;
+    display: flex;
+    align-items: center;
+    color: $danger-color !important;
+    padding: $spacing-sm;
+    border-radius: $border-radius;
+
+    &:hover {
+      background: rgba($danger-color, 0.1);
+    }
+
+    svg {
+      margin-right: $spacing-md;
+    }
+  }
+}

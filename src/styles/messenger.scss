@@ -1,0 +1,302 @@
+@import './globals';
+
+.messenger {
+  display: flex;
+  gap: $spacing-md;
+  height: calc(100% - 140px);  
+  flex: 1;
+}
+
+.contacts {
+  width: 300px;
+  background: white;
+  border-radius: $border-radius;
+  padding: $spacing-sm;
+  box-shadow: $shadow-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  height: 100%;
+
+  // COLLAPSED состояние
+  &.collapsed {
+    width: 72px;
+    padding: $spacing-xs;
+    align-items: center;
+
+    .contacts__title,
+    .contacts__new-chat,
+    .search-input {
+      display: none;
+    }
+
+    .contacts__list {
+      gap: $spacing-sm;
+    }
+
+    .contacts__item {
+      justify-content: center;
+      padding: $spacing-xs;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__toggle,
+  &__new-chat {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: $primary-color;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  &__list {
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    padding-right: $spacing-xs;
+  }
+
+  &__item {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+    padding: $spacing-sm;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    &.active {
+      background: rgba($primary-color, 0.08);
+    }
+  }
+
+  &__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba($primary-color, 0.1);
+    @include flex-center;
+    font-weight: 700;
+    color: $primary-color;
+    flex-shrink: 0;
+  }
+
+  &__meta {
+    flex: 1;
+  }
+
+  &__name {
+    font-weight: 600;
+  }
+
+  &__last-message {
+    color: rgba($text-color, 0.6);
+    font-size: 0.9em;
+  }
+}
+
+.chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: $border-radius;
+  padding: $spacing-sm;
+  box-shadow: $shadow-sm;
+  min-width: 300px;
+  height: 100%;
+
+  &__header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__header {
+    font-weight: 700;
+    padding: $spacing-xs 0;
+    border-bottom: 1px solid $sidebar-background;
+  }
+
+  &__controls {
+    display: flex;
+    gap: $spacing-xs;
+  }
+
+  &__bg-toggle {
+    background: transparent;
+    border: 1px solid #e1e5eb;
+    padding: $spacing-xs;
+    border-radius: $border-radius;
+    cursor: pointer;
+  }
+
+  &__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-sm $spacing-xs;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    border-radius: $border-radius;
+    margin-top: $spacing-xs;
+
+    &.chat-bg-default { background: linear-gradient(180deg, rgba(250,250,251,1), rgba(245,248,250,1)); }
+    &.chat-bg-light  { background: linear-gradient(90deg, #ffffff, #f7f9fc); }
+    &.chat-bg-dots   { background-image: radial-gradient(#e6f2ff 1px, transparent 1px); background-size: 10px 10px; }
+    &.chat-bg-soft   { background: linear-gradient(135deg, #ffefba, #ffffff); }
+  }
+
+  &__empty-hint {
+    @include flex-center;
+    height: 100%;
+    color: rgba($text-color, 0.5);
+    font-style: italic;
+  }
+
+  &__input-row {
+    display: flex;
+    gap: $spacing-sm;
+    margin-top: $spacing-sm;
+  }
+
+  &__input {
+    flex: 1;
+    padding: $spacing-sm;
+    border-radius: $border-radius;
+    border: 1px solid #e1e5eb;
+    outline: none;
+    transition: $transition;
+  }
+
+  &__sticker-btn {
+    padding: $spacing-sm;
+    border-radius: $border-radius;
+    border: 1px solid #e1e5eb;
+    background: white;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
+  // МОДАЛКИ (глобальные)
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    @include flex-center;
+
+    &__content {
+      background: white;
+      border-radius: $border-radius;
+      padding: $spacing-lg;
+      max-width: 360px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    &__close {
+      position: absolute;
+      top: $spacing-sm;
+      right: $spacing-sm;
+      font-size: 24px;
+      cursor: pointer;
+      color: rgba($text-color, 0.5);
+    }
+
+    &__title {
+      margin: $spacing-lg 0 $spacing-md 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .sticker-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: $spacing-xs;
+    margin-top: $spacing-md;
+  }
+
+  .sticker-item {
+    font-size: 24px;
+    padding: $spacing-sm;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background: rgba($primary-color, 0.1);
+      transform: scale(1.1);
+    }
+  }
+
+  .bg-options {
+    display: flex;
+    gap: $spacing-sm;
+    flex-wrap: wrap;
+    margin-top: $spacing-md;
+  }
+
+  .bg-option {
+    width: 64px;
+    height: 44px;
+    border-radius: 8px;
+    border: 2px solid #e1e5eb;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      border-color: $primary-color;
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Мобильная адаптация
+@media (max-width: 900px) {
+  .messenger {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .contacts {
+    width: 100%;
+    height: 220px;
+  }
+
+  .chat {
+    width: 100%;
+  }
+}

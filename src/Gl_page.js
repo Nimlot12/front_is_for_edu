@@ -1,6 +1,5 @@
 import React from "react";
-import './style_auth.css';
-import logo from './logo.jpg';
+import './styles/gl-page.scss';
 import NavBar from "./NavBar";
 import Header from "./Header";
 import {useUser} from "./UserContext";
@@ -10,34 +9,34 @@ import {useUser} from "./UserContext";
 const GlPage = () => {
     const { user, setUser } = useUser(); 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard">
     <NavBar user = {user} setUser = {setUser}/>
-    <main className="main-content">
+    <main className="dashboard__content">
         <Header user = {user}/>
-        <div className="dashboard-grid">
+        <div className="dashboard__grid">
             <div className="dashboard-card">
                 <h3>Последние занятия</h3>
-                <ul className="recent-lessons">
-                    <li>
-                        <span className="lesson-subject">Математика</span>
-                        <span >Вчера, 16:00</span>
+                <ul className="lesson-list lesson-list--recent">
+                    <li className="lesson-list__item">
+                        <span className="lesson-list__subject">Математика</span>
+                        <span className="lesson-list__time">Вчера, 16:00</span>
                     </li>
-                    <li>
-                        <span className="lesson-subject">Английский язык</span>
-                        <span >Позавчера, 14:30</span>
+                    <li className="lesson-list__item">
+                        <span className="lesson-list__subject">Английский язык</span>
+                        <span className="lesson-list__time">Позавчера, 14:30</span>
                     </li>
                 </ul>
             </div>
             <div className="dashboard-card">
                 <h3>Предстоящие занятия</h3>
-                <ul className="upcoming-lessons">
-                    <li>
-                        <span className="lesson-subject">Физика</span>
-                        <span >Завтра, 15:00</span>
+                <ul className="lesson-list lesson-list--upcoming">
+                    <li className="lesson-list__item">
+                        <span className="lesson-list__subject">Физика</span>
+                        <span className="lesson-list__time">Завтра, 15:00</span>
                     </li>
-                    <li>
-                        <span className="lesson-subject">Химия</span>
-                        <span >Послезавтра, 17:30</span>
+                    <li className="lesson-list__item">
+                        <span className="lesson-list__subject">Химия</span>
+                        <span className="lesson-list__time">Послезавтра, 17:30</span>
                     </li>
                 </ul>
             </div>

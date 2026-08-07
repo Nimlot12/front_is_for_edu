@@ -17,6 +17,7 @@ import Task_bank_page from "./Task_bank/Task_bank_page";
 import Workspace_page from "./Workspace/Workspace_page";
 import LessonHomework_page from "./Workspace/LessonHomework/LessonHomework_page";
 import Lesson_page from "./Workspace/Lesson/Lesson_page";
+import Messenger from "./Messenger/Messenger";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
@@ -48,6 +49,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+            <Route
+                path="/messenger"
+                element={
+                    <ProtectedRoute permission="user_permission">
+                        <Messenger />
+                    </ProtectedRoute>
+                }
+            />
           <Route
             path="/lead_page/Admin_page"
             element={

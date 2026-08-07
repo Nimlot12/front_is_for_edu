@@ -1,0 +1,59 @@
+@import './globals.scss';
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius;
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__profile {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__profile-link {
+    display: flex;
+    align-items: center;
+    color: $text-color;
+    padding: $spacing-sm;
+    border-radius: $border-radius;
+    transition: $transition;
+
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    &:hover {
+      color: $primary-color;
+      background: rgba($primary-color, 0.08);
+    }
+
+    &--active {
+      color: $primary-color;
+      background: rgba($primary-color, 0.12);
+    }
+
+    // МОДИФИКАТОРЫ ДЛЯ РАЗЛИЧНЫХ КНОПОК
+    &--messenger {
+      svg {
+        stroke-width: 1.8;  // Твой стиль
+      }
+    }
+
+    &--profile {
+      svg {
+        stroke-width: 2;  // Твой стиль
+      }
+    }
+  }
+}

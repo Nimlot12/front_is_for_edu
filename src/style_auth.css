@@ -112,7 +112,7 @@ body {
     text-align: left;
 }
 
-.input-group input, 
+.input-group input,
 .input-group select {
     width: 100%;
     padding: 12px;
@@ -123,7 +123,7 @@ body {
     outline: none;
 }
 
-.input-group input:focus, 
+.input-group input:focus,
 .input-group select:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
@@ -276,7 +276,7 @@ body {
     box-shadow: 0 10px 25px rgba(50, 50, 93, 0.1);
 }
 
-.recent-lessons li, 
+.recent-lessons li,
 .upcoming-lessons li {
     display: flex;
     justify-content: space-between;
@@ -284,7 +284,7 @@ body {
     border-bottom: 1px solid #f0f4f8;
 }
 
-.recent-lessons li:last-child, 
+.recent-lessons li:last-child,
 .upcoming-lessons li:last-child {
     border-bottom: none;
 }
@@ -542,7 +542,7 @@ body {
     align-items: center;
 }
 
-.filter-group input, 
+.filter-group input,
 .filter-group select {
     flex-grow: 1;
     padding: 10px;
@@ -576,7 +576,7 @@ body {
     border-collapse: collapse;
 }
 
-#usersTable th, 
+#usersTable th,
 #usersTable td {
     padding: 12px;
     text-align: left;
@@ -600,7 +600,7 @@ body {
     gap: 10px;
 }
 
-.edit-btn, 
+.edit-btn,
 .delete-btn {
     padding: 8px 16px;
     border: none;
@@ -717,8 +717,8 @@ body {
 }
 
 #newUserRole {
-    max-height: 200px; 
-    overflow-y: auto; 
+    max-height: 200px;
+    overflow-y: auto;
 }
 .schedule-management {
     display: flex;
@@ -748,7 +748,7 @@ body {
 
 .schedule-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     justify-content: center;
     background: white;
@@ -761,7 +761,7 @@ body {
     grid-column: span 1;
     justify-self: center;
   }
-  
+
   .schedule-container::after {
     content: "";
     display: block;
@@ -788,8 +788,8 @@ body {
 }
 
 .schedule-day {
-    flex: 0 1 calc(20% - 20px);  
-    min-width: 200px;  
+    flex: 0 1 calc(20% - 20px);
+    min-width: 200px;
     background-color: var(--sidebar-background);
     border-radius: 8px;
     padding: 15px;
@@ -934,7 +934,7 @@ body {
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease;
   }
-  
+
   .delete-lesson-btn:hover {
     transform: scale(1.2);
     background-color: darkred;
@@ -1031,7 +1031,7 @@ body {
 }
 
 .topics-dropdown-content.open {
-    max-height: 300px; 
+    max-height: 300px;
     padding: 15px 0;
 }
 
@@ -1258,8 +1258,8 @@ body {
 .create-topic-modal .submit-btn:hover {
     background-color: #2980b9;
 }
-.add-subject-btn, 
-.add-topic-btn, 
+.add-subject-btn,
+.add-topic-btn,
 .add-task-btn {
     background-color: var(--primary-color);
     color: white;
@@ -1292,7 +1292,7 @@ body {
     align-items: center;
     z-index: 999; /* важно, чтобы было выше остального контента */
   }
-  
+
   /* Содержимое модального окна */
   .modal-content {
     background-color: white;
@@ -1305,7 +1305,7 @@ body {
     overflow-y: auto;
     position: relative;
   }
-  
+
   /* Кнопка закрытия */
   .close-button {
     position: absolute;

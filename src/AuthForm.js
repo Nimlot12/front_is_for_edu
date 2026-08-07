@@ -1,8 +1,10 @@
 import logo from './logo.jpg';
-import './style_auth.css';
+import './styles/auth-form.scss';
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./UserContext";
+
+
 
 const AuthForm = () => {
   const navigate = useNavigate();
@@ -72,31 +74,25 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="container">
-      <div className="logo-container">
-        <img src={logo} alt="SchoolDOT Logo" className="logo" />
-      </div>
-      <div className="form-container">
-        <div className="form-switcher">
-          <button
-            className={activeTab === "login" ? "active" : ""}
-            onClick={() => setActiveTab("login")}
-          >
-            Вход
-          </button>
-          <button
-            className={activeTab === "register" ? "active" : ""}
-            onClick={() => setActiveTab("register")}
-          >
-            Регистрация
-          </button>
-        </div>
+      <div className="auth-form">
+          <div className="auth-form__logo-container">
+              <img src={logo} alt="SchoolDOT Logo" className="auth-form__logo" />
+          </div>
+          <div className="auth-form__switcher">
+              <button className={activeTab === "login" ? "active" : ""} onClick={() => setActiveTab("login")}>
+                  Вход
+              </button>
+              <button className={activeTab === "register" ? "active" : ""} onClick={() => setActiveTab("register")}>
+                  Регистрация
+              </button>
+          </div>
         {activeTab === "login" ? (
-          <form onSubmit={handleLoginSubmit} className="auth-form">
-            <h2>Вход</h2>
+          <form onSubmit={handleLoginSubmit} className="auth-form__login-form">
+            <h2 className="auth-form__title">Вход</h2>
             <div className="input-group">
-              <label htmlFor="loginEmail">Email</label>
+              <label htmlFor="loginEmail" className="input-group__label">Email</label>
               <input
+                className="input-group__input"
                 type="email"
                 id="loginEmail"
                 value={loginEmail}
@@ -106,8 +102,9 @@ const AuthForm = () => {
               {errors.loginEmail && <span className="error">{errors.loginEmail}</span>}
             </div>
             <div className="input-group">
-              <label htmlFor="loginPassword">Пароль</label>
+              <label htmlFor="loginPassword" className="input-group__label">Пароль</label>
               <input
+                className="input-group__input"
                 type="password"
                 id="loginPassword"
                 value={loginPassword}
@@ -117,17 +114,18 @@ const AuthForm = () => {
               {errors.loginPassword && <span className="error">{errors.loginPassword}</span>}
             </div>
             {errors.general && <span className="error">{errors.general}</span>}
-            <button type="submit" className="submit-btn">Войти</button>
-            <div className="form-footer">
-              <a href="https://example.com/restore-password">Забыли пароль?</a>
+            <button type="submit" className="btn btn--primary btn--width">Войти</button>
+            <div className="auth-form__footer">
+              <a href="https://example.com/restore-password" className="link">Забыли пароль?</a>
             </div>
           </form>
         ) : (
-          <form onSubmit={handleRegSubmit} className="auth-form">
-            <h2>Регистрация</h2>
+          <form onSubmit={handleRegSubmit} className="auth-form__login-form">
+            <h2 className="auth-form__title">Регистрация</h2>
             <div className="input-group">
-              <label htmlFor="registerEmail">email</label>
+              <label htmlFor="registerEmail" className="input-group__label">email</label>
               <input
+                className="input-group__input"
                 type="email"
                 id="registerEmail"
                 value={registerEmail}
@@ -136,8 +134,9 @@ const AuthForm = () => {
               />
             </div>
             <div className="input-group">
-              <label htmlFor="registerPassword">Пароль</label>
+              <label htmlFor="registerPassword" className="input-group__label">Пароль</label>
               <input
+                className="input-group__input"
                 type="text"
                 id="registerPassword"
                 value={registerPassword}
@@ -146,8 +145,9 @@ const AuthForm = () => {
               />
             </div>
             <div className="input-group">
-              <label htmlFor="registerPhoneNumber">Номер телефона</label>
+              <label htmlFor="registerPhoneNumber" className="input-group__label">Номер телефона</label>
               <input
+                className="input-group__input"
                 type="tel"
                 id="registerPhoneNumber"
                 pattern="^\+[0-9]{10,15}$"
@@ -158,8 +158,9 @@ const AuthForm = () => {
               />
             </div>
             <div className="input-group">
-              <label htmlFor="registerName">Имя</label>
+              <label htmlFor="registerName" className="input-group__label">Имя</label>
               <input
+                className="input-group__input"
                 type="text"
                 id="registerName"
                 value={registerName}
@@ -168,8 +169,9 @@ const AuthForm = () => {
               />
             </div>
             <div className="input-group">
-              <label htmlFor="registerLastName">Фамилия</label>
+              <label htmlFor="registerLastName" className="input-group__label">Фамилия</label>
               <input
+                className="input-group__input"
                 type="text"
                 id="registerLastName"
                 value={registerLastName}
@@ -177,11 +179,10 @@ const AuthForm = () => {
                 required
               />
             </div>
-            <button type="submit" className="submit-btn">Зарегистрироваться</button>
+            <button type="submit" className="btn btn--primary btn--width">Зарегистрироваться</button>
           </form>
         )}
       </div>
-    </div>
   );
 };
 
