@@ -1,13 +1,19 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import RichTextEditor from "./RichTextEditor";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
-const Modal_add_subject = ({ onClose, onSubjectCreated }) => {
-    const [title, setTitle] = useState("");
-    const [description1, setDescription1] = useState("");
+const Modal_add_subject = ({ onClose, onSubjectCreated, onSubjectUpdated, subjectToEdit }) => {
+    const isEditMode = Boolean(subjectToEdit);
+    const [title, setTitle] = useState(subjectToEdit?.name || "");
+    const [description1, setDescription1] = useState(subjectToEdit?.description || "");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        setTitle(subjectToEdit?.name || "");
+        setDescription1(subjectToEdit?.description || "");
+    }, [subjectToEdit]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,9 +27,13 @@ const Modal_add_subject = ({ onClose, onSubjectCreated }) => {
         setLoading(true);
         try {
             const token = localStorage.getItem("access_token");
+            const url = isEditMode
+                ? `${API_URL}/subject/update_subject/${subjectToEdit.id}`
+                : `${API_URL}/subject/create_subject/`;
+            const method = isEditMode ? "PUT" : "POST";
 
-            const response = await fetch(`${API_URL}/subject/create_subject/`, {
-                method: "POST",
+            const response = await fetch(url, {
+                method,
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -41,7 +51,11 @@ const Modal_add_subject = ({ onClose, onSubjectCreated }) => {
 
             const data = await response.json();
 
-            if (onSubjectCreated) onSubjectCreated(data);
+            if (isEditMode) {
+                if (onSubjectUpdated) onSubjectUpdated(data);
+            } else {
+                if (onSubjectCreated) onSubjectCreated(data);
+            }
             onClose();
         } catch (err) {
             setError(err.message);
@@ -54,7 +68,9 @@ const Modal_add_subject = ({ onClose, onSubjectCreated }) => {
         <div className="modal" id="subjectModal">
                 <div className="modal-content">
                     <span className="close-modal" onClick={onClose}>&times;</span>
-                    <h3 id="subjectModalTitle">Добавить предмет</h3>
+                    <h3 id="subjectModalTitle">
+                        {isEditMode ? "Редактировать предмет" : "Добавить предмет"}
+                    </h3>
                     <form id="subjectForm" onSubmit={handleSubmit}>
                         <div className="input-group">
                             <label htmlFor="subjectName">Название предмета</label>

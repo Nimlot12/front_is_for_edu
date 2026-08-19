@@ -6,7 +6,9 @@ const API_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
 
 const Subjects = ({ onSelect }) => {
     const [showModal, setShowModal] = useState(false);
+    const [subjectToEdit, setSubjectToEdit] = useState(null);
     const [subjects, setSubjects] = useState([]);
+    const [deletingId, setDeletingId] = useState(null);
 
     const fetchSubjects = useCallback(async () => {
         const token = localStorage.getItem("access_token");
@@ -36,13 +38,68 @@ const Subjects = ({ onSelect }) => {
         fetchSubjects();
     };
 
+    const handleSubjectUpdated = (updatedSubject) => {
+        setSubjects((prev) =>
+            prev.map((s) => (s.id === updatedSubject.id ? updatedSubject : s))
+        );
+        setSubjectToEdit(null);
+    };
+
+    const handleEditClick = (e, subject) => {
+        e.stopPropagation();
+        setSubjectToEdit(subject);
+        setShowModal(true);
+    };
+
+    const handleDeleteClick = async (e, subject) => {
+        e.stopPropagation();
+        if (!window.confirm(`Удалить предмет "${subject.name}"?`)) return;
+
+        setDeletingId(subject.id);
+        try {
+            const token = localStorage.getItem("access_token");
+            const response = await fetch(
+                `${API_URL}/subject/delete_subject/${subject.id}`,
+                {
+                    method: "DELETE",
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            if (!response.ok) {
+                const errData = await response.json().catch(() => null);
+                throw new Error(errData?.detail || "Не удалось удалить предмет");
+            }
+
+            setSubjects((prev) => prev.filter((s) => s.id !== subject.id));
+        } catch (error) {
+            console.error("Ошибка удаления предмета:", error);
+            alert(error.message);
+        } finally {
+            setDeletingId(null);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSubjectToEdit(null);
+    };
+
     const renderSubjects = () => {
         return subjects.map(subject => (
             <div key={subject.id} className="subject-selection-item" onClick={() => onSelect(subject)}>
                 <span>{subject.name}</span>
                 <div className="selection-item-actions">
-                    <button className="edit-btn">✏️</button>
-                    <button className="delete-btn">🗑️</button>
+                    <button className="edit-btn" onClick={(e) => handleEditClick(e, subject)}>
+                        ✏️
+                    </button>
+                    <button
+                        className="delete-btn"
+                        onClick={(e) => handleDeleteClick(e, subject)}
+                        disabled={deletingId === subject.id}
+                    >
+                        {deletingId === subject.id ? "…" : "🗑️"}
+                    </button>
                 </div>
             </div>
         ));
@@ -59,7 +116,7 @@ const Subjects = ({ onSelect }) => {
                         Добавить предмет
                         </button>
                 </div>
-                {showModal && <Modal_add_subject onClose={() => setShowModal(false)} onSubjectCreated={handleSubjectCreated}/>}
+                {showModal && <Modal_add_subject onClose={() => setShowModal(false)} onSubjectCreated={handleSubjectCreated} onSubjectUpdated={handleSubjectUpdated} subjectToEdit={subjectToEdit}/>}
                 {renderSubjects()} 
             </div>
 
