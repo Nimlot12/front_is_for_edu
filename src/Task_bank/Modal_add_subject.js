@@ -57,7 +57,7 @@ const Modal_add_subject = ({ onClose, onSubjectCreated }) => {
                     <h3 id="subjectModalTitle">Добавить предмет</h3>
                     <form id="subjectForm" onSubmit={handleSubmit}>
                         <div className="input-group">
-                            <label for="subjectName">Название предмета</label>
+                            <label htmlFor="subjectName">Название предмета</label>
                             <input
                                 type="text"
                                 id="subjectName"
@@ -67,7 +67,7 @@ const Modal_add_subject = ({ onClose, onSubjectCreated }) => {
                             />
                         </div>
                         <div className="input-group">
-                            <label for="subjectDescription">Описание</label>
+                            <label htmlFor="subjectDescription">Описание</label>
                             <RichTextEditor content={description1} setContent={setDescription1}/>
                         </div>
 
